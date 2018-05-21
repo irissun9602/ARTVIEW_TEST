@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: security1
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: iris3
+Implementation-Vendor-Id: net.skhu
+Build-Jdk: 1.8.0_171
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/security1
+Created-By: Maven Integration for Eclipse
+
