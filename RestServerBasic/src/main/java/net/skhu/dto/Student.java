@@ -4,12 +4,21 @@ package net.skhu.dto;
 public class Student {
 	
 	int id;
+	int departmentId;
 	
 	String studentNumber;
 	String name;
 	int year;
 	
 	Department department;
+
+	public int getDepartmentId() {
+		return departmentId;
+	}
+
+	public void setDepartmentId(int departmentId) {
+		this.departmentId = departmentId;
+	}
 
 	public int getId() {
 		return id;
