@@ -3,12 +3,16 @@ package net.skhu.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.session.web.http.HeaderHttpSessionStrategy;
+import org.springframework.session.web.http.HttpSessionStrategy;
 
 import net.skhu.service.MyAuthenticationProvider;
 
@@ -28,12 +32,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception
     {
         http.csrf().disable()
-        	.authorizeRequests()
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER)
+        	.and()
+        .authorizeRequests()
+        	.antMatchers("/user/login").permitAll()
+        	.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+        
             .antMatchers("/admin/**").access("ROLE_ADMIN")
-            .antMatchers("/professor/**").access("ROLE_PROFESSOR")
+            .antMatchers("/user/**").access("USER")
             .antMatchers("/guest/**").permitAll()
-            .antMatchers("/").permitAll()
-            .antMatchers("/**").authenticated()
+            .anyRequest().authenticated()
         	.and()
         	.logout();
             
@@ -46,4 +54,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     public AuthenticationManager authenticationManagerBean() throws Exception {
     	return super.authenticationManagerBean();
     }
+    
+    @Bean
+    public HttpSessionStrategy httpSessionStrategy() {
+    	return new HeaderHttpSessionStrategy();
+    }
+    
+    
 }

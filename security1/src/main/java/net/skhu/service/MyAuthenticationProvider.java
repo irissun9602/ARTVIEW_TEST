@@ -35,7 +35,7 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
         switch (user.getUserType()) {
         case "관리자": role = "ROLE_ADMIN"; break;
         case "교수": role = "ROLE_PROFESSOR"; break;
-        case "학생": role = "ROLE_STUDENT"; break;
+        case "학생": role = "USER"; break;
         }
         grantedAuthorities.add(new SimpleGrantedAuthority(role));
         return new MyAuthenticaion(loginId, password, grantedAuthorities, user);
