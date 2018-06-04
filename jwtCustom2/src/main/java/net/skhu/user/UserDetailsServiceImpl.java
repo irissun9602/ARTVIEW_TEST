@@ -10,18 +10,18 @@ import static java.util.Collections.emptyList;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private ApplicationUserMapper applicationUserRepository;
+    private ApplicationUserMapper applicationUserMapper;
 
-    public UserDetailsServiceImpl(ApplicationUserMapper applicationUserRepository) {
-        this.applicationUserRepository = applicationUserRepository;
+    public UserDetailsServiceImpl(ApplicationUserMapper applicationUserMapper) {
+        this.applicationUserMapper = applicationUserMapper;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        ApplicationUser applicationUser = applicationUserRepository.findByUsername(username);
+        ApplicationUser applicationUser = applicationUserMapper.findByUsername(username);
         if (applicationUser == null) {
             throw new UsernameNotFoundException(username);
         }
-        return new User(applicationUser.getUsername(), applicationUser.getPassword(), emptyList());
+        return new User(applicationUser.getLogin_id(), applicationUser.getPwd(), emptyList());
     }
 }
