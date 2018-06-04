@@ -7,6 +7,9 @@
   <select id="findByUsername" resultType="ApplicationUser">
     SELECT * FROM ApplicationUser WHERE username = #{username}
   </select>
+  <select id="findAll" resultType="ApplicationUser">
+    SELECT * FROM ApplicationUser
+  </select>
   
     <insert id="save">
     INSERT ApplicationUser (id,username,password)
