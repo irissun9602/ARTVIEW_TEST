@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="net.skhu.user.ApplicationUserMapper">
+<mapper namespace="net.skhu.user.UserMapper">
 
-  <select id="findByUsername" resultType="ApplicationUser">
+  <select id="findByUsername" resultType="User">
     SELECT * FROM user WHERE login_id = #{login_id}
   </select>
-  <select id="findAll" resultType="ApplicationUser">
+  <select id="findAll" resultType="User">
     SELECT * FROM user
   </select>
   

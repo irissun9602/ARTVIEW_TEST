@@ -12,23 +12,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
 
-    private ApplicationUserMapper applicationUserMapper;
+    private UserMapper userMapper;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserController(ApplicationUserMapper applicationUserMapper,
+    public UserController(UserMapper userMapper,
                           BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.applicationUserMapper = applicationUserMapper;
+        this.userMapper = userMapper;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @PostMapping("/sign-up")
-    public void signUp(@RequestBody ApplicationUser user) {
+    public void signUp(@RequestBody User user) {
      user.setPwd(bCryptPasswordEncoder.encode(user.getPwd()));
-        applicationUserMapper.save(user);
+        userMapper.save(user);
     }
     
     @RequestMapping("/list")
-    public List<ApplicationUser> list () {
-    	return applicationUserMapper.findAll();
+    public List<User> list () {
+    	return userMapper.findAll();
     }
 }

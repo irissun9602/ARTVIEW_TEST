@@ -10,15 +10,15 @@ import static java.util.Collections.emptyList;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private ApplicationUserMapper applicationUserMapper;
+    private UserMapper UserMapper;
 
-    public UserDetailsServiceImpl(ApplicationUserMapper applicationUserMapper) {
-        this.applicationUserMapper = applicationUserMapper;
+    public UserDetailsServiceImpl(UserMapper UserMapper) {
+        this.UserMapper = UserMapper;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        ApplicationUser applicationUser = applicationUserMapper.findByUsername(username);
+        net.skhu.user.User applicationUser = UserMapper.findByUsername(username);
         if (applicationUser == null) {
             throw new UsernameNotFoundException(username);
         }

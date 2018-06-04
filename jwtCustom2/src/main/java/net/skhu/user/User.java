@@ -1,7 +1,7 @@
 package net.skhu.user;
 
 
-public class ApplicationUser {
+public class User {
 	
 	private long id;
 	private int fav_artield_id;
