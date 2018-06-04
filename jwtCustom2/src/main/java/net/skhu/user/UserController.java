@@ -1,5 +1,7 @@
 package net.skhu.user;
 
+import java.util.List;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,5 +26,10 @@ public class UserController {
     	user.setId(0);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         applicationUserRepository.save(user);
+    }
+    
+    @RequestMapping("/list")
+    public List<ApplicationUser> list () {
+    	return applicationUserRepository.findAll();
     }
 }
