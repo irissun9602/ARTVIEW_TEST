@@ -26,7 +26,7 @@ public class APIController {
 
 	@Autowired StudentMapper studentMapper;
     @Autowired DepartmentMapper departmentMapper;
-	
+	@Autowired KakaoService kakaoService;
 	
 	@RequestMapping("students")
 	public List<Student> students(){
@@ -64,10 +64,9 @@ public class APIController {
 	public String kakaoLogin(@RequestParam("code") String code, HttpServletRequest request, HttpServletResponse response) {
 		//로그인 후 code 얻음
 		System.out.println("code: " +code);
+		kakaoService.getToken(code);
 		return code;
 	}
-	
-	
 	
 	
 	

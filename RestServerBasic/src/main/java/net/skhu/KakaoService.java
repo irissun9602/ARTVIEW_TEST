@@ -1,94 +1,79 @@
 package net.skhu;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.List;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URL;
 
-import org.springframework.stereotype.Service;
+import javax.net.ssl.HttpsURLConnection;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-@Service
 public class KakaoService {
 
-	
-	public static JsonNode getAccessToken(String autorize_code){ 
+	public void getToken(String authorize_code) {
+		final String AUTH_HOST = "https://kauth.kakao.com";
+		final String tokenRequestUrl = AUTH_HOST + "/oauth/token";
 
-	    final String RequestUrl = "https://kauth.kakao.com/oauth/token";
+		String CLIENT_ID = "10a7f5555967e1628375402721efa3b3"; // 해당 앱의 REST API KEY 정보. 개발자 웹사이트의 대쉬보드에서 확인 가능
+		String REDIRECT_URI = "http://localhost:8080/RestServerBasic/api/kakaologin"; // 해당 앱의 설정된 uri. 개발자 웹사이트의 대쉬보드에서 확인 및 설정 가능
+		String code = authorize_code; // 로그인 과정중 얻은 authorization code 값
 
+		HttpsURLConnection conn = null;
+		OutputStreamWriter writer = null;
+		BufferedReader reader = null;
+		InputStreamReader isr = null;
 
+		try {
+			final String params = String.format("grant_type=authorization_code&client_id=%s&redirect_uri=%s&code=%s",
+					CLIENT_ID, REDIRECT_URI, code);
 
-	    final List<NameValuePair> postParams = new ArrayList<NameValuePair>();
+			final URL url = new URL(tokenRequestUrl);
 
-	    postParams.add(new BasicNameValuePair("grant_type", "authorization_code"));
+			conn = (HttpsURLConnection) url.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setDoOutput(true);
 
-	    postParams.add(new BasicNameValuePair("client_id", RestApiKey));    // REST API KEY
+			writer = new OutputStreamWriter(conn.getOutputStream());
+			writer.write(params);
+			writer.flush();
 
-	    postParams.add(new BasicNameValuePair("redirect_uri", Redirect_URI));    // 리다이렉트 URI
+			final int responseCode = conn.getResponseCode();
+			System.out.println("\nSending 'POST' request to URL : " + tokenRequestUrl);
+			System.out.println("Post parameters : " + params);
+			System.out.println("Response Code : " + responseCode);
 
-	    postParams.add(new BasicNameValuePair("code", autorize_code));    // 로그인 과정중 얻은 code 값
+			isr = new InputStreamReader(conn.getInputStream());
+			reader = new BufferedReader(isr);
+			final StringBuffer buffer = new StringBuffer();
+			String line;
+			while ((line = reader.readLine()) != null) {
+				buffer.append(line);
+			}
 
+			System.out.println(buffer.toString());
 
-
-	    final HttpClient client = HttpClientBuilder.create().build();
-
-	    final HttpPost post = new HttpPost(RequestUrl);
-
-	    JsonNode returnNode = null;
-
-	
-
-	    try {
-
-	      post.setEntity(new UrlEncodedFormEntity(postParams));
-
-	      final HttpResponse response = client.execute(post);
-
-	      final int responseCode = response.getStatusLine().getStatusCode();
-
-
-
-	      System.out.println("\nSending 'POST' request to URL : " + RequestUrl);
-
-	      System.out.println("Post parameters : " + postParams);
-
-	      System.out.println("Response Code : " + responseCode);
-
-	     
-
-	      /JSON 형태 반환값 처리
-
-	      ObjectMapper mapper = new ObjectMapper();
-
-	      returnNode = mapper.readTree(response.getEntity().getContent());
-
-
-
-	    } catch (UnsupportedEncodingException e) {
-
-	      e.printStackTrace();
-
-	    } catch (ClientProtocolException e) {
-
-	      e.printStackTrace();
-
-	    } catch (IOException e) {
-
-	      e.printStackTrace();
-
-	    } finally {
-
-	        // clear resources
-
-	    }
-
-	    
-
-	    return returnNode;
-
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			// clear resources
+			if (writer != null) {
+				try {
+					writer.close();
+				} catch (Exception ignore) {
+				}
+			}
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (Exception ignore) {
+				}
+			}
+			if (isr != null) {
+				try {
+					isr.close();
+				} catch (Exception ignore) {
+				}
+			}
+		}
 	}
-
-
-
 }
