@@ -8,6 +8,8 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import org.springframework.stereotype.Service;
+@Service
 public class KakaoService {
 
 	public void getToken(String authorize_code) {
