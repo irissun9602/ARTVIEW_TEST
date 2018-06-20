@@ -58,7 +58,7 @@ public class APIController {
 	}
 	
 	
-	//카카오페이 연동 결제 서비스
+	//카카오톡  로그인 토큰 발급 서비스
 	@RequestMapping(value="kakaologin", produces= "application/json", 
 			method = {RequestMethod.GET,RequestMethod.POST})
 	public String kakaoLogin(@RequestParam("code") String code, HttpServletRequest request, HttpServletResponse response) {
