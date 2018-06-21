@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import net.skhu.dto.Department;
 import net.skhu.dto.Student;
 import net.skhu.mapper.DepartmentMapper;
@@ -64,9 +66,24 @@ public class APIController {
 	public String kakaoLogin(@RequestParam("code") String code, HttpServletRequest request, HttpServletResponse response) {
 		//로그인 후 code 얻음
 		System.out.println("code: " +code);
-		kakaoService.getToken(code);
+		String token = kakaoService.getToken(code);
 		return code;
 	}
+	
+	
+	@RequestMapping(value="kakaoInfo", produces= "application/json", 
+			method = {RequestMethod.GET,RequestMethod.POST})
+	public JsonNode kakaoInfo(@RequestParam("code") String code, HttpServletRequest request, HttpServletResponse response) {
+		//로그인 후 code 얻음
+		System.out.println("code: " +code);
+
+		String token = kakaoService.getToken(code);
+		return kakaoService.getKakaoUserInfo(token);
+		
+	}
+	
+	
+	
 	
 	
 	
