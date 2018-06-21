@@ -2,6 +2,7 @@ package net.skhu;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,6 +20,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import net.skhu.dto.Department;
 import net.skhu.dto.Info;
 import net.skhu.dto.Student;
+import net.skhu.email.model.TestEmail;
+import net.skhu.email.service.EmailService;
 import net.skhu.mapper.DepartmentMapper;
 import net.skhu.mapper.StudentMapper;
 
@@ -85,6 +88,14 @@ public class APIController {
 		
 	}
 	
+	@Autowired
+	EmailService emailService;
+	
+	@RequestMapping(value="sendMail", method=RequestMethod.GET)
+	public void send () throws MessagingException {
+		TestEmail testEmail = new TestEmail("iris3795@gmail.com","iris9602@naver.com", "제목입니다","잘가나요");
+		emailService.sendMail(testEmail);
+	}
 	
 
 	
