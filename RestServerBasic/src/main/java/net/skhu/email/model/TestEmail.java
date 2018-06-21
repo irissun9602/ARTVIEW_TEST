@@ -1,4 +1,4 @@
-package email.model;
+package net.skhu.email.model;
 
 public class TestEmail {
 	private String sender;
@@ -6,6 +6,16 @@ public class TestEmail {
 
 	private String subject;
 	private String content;
+	
+	
+	
+	public TestEmail(String sender, String recipient, String subject, String content) {
+		super();
+		this.sender = sender;
+		this.recipient = recipient;
+		this.subject = subject;
+		this.content = content;
+	}
 	public String getSender() {
 		return sender;
 	}
