@@ -62,8 +62,10 @@ public class KakaoService {
 			}
 
 			System.out.println(buffer.toString());
+			String token = buffer.toString();
+				token.substring(token.lastIndexOf("access_token\":\""), token.lastIndexOf("\"token_type"));
 
-			return buffer.toString();
+			return token;
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -104,7 +106,7 @@ public class KakaoService {
 
 		    String CLIENT_ID = "10a7f5555967e1628375402721efa3b3"; // REST API KEY
 
-		    String REDIRECT_URI = "http://localhost:8080/RestServerBasic/api/kakaoInfo"; // 리다이렉트 URI
+		    String REDIRECT_URI =  "http://localhost:8080/RestServerBasic/api/kakaologin"; // 리다이렉트 URI
 
 		    String access = token; // 로그인 과정중 얻은 토큰 값
 
@@ -112,7 +114,7 @@ public class KakaoService {
 
 		    final HttpClient client = HttpClientBuilder.create().build();
 
-		    final HttpPost post = new HttpPost(REDIRECT_URI);
+		    final HttpPost post = new HttpPost(RequestUrl);
 
 		    
 

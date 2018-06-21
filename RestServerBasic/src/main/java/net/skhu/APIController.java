@@ -63,28 +63,16 @@ public class APIController {
 	//카카오톡  로그인 토큰 발급 서비스
 	@RequestMapping(value="kakaologin", produces= "application/json", 
 			method = {RequestMethod.GET,RequestMethod.POST})
-	public String kakaoLogin(@RequestParam("code") String code, HttpServletRequest request, HttpServletResponse response) {
+	public JsonNode kakaoLogin(@RequestParam("code") String code, HttpServletRequest request, HttpServletResponse response) {
 		//로그인 후 code 얻음
 		System.out.println("code: " +code);
-		String token = kakaoService.getToken(code);
-		return code;
-	}
-	
-	
-	@RequestMapping(value="kakaoInfo", produces= "application/json", 
-			method = {RequestMethod.GET,RequestMethod.POST})
-	public JsonNode kakaoInfo(@RequestParam("code") String code, HttpServletRequest request, HttpServletResponse response) {
-		//로그인 후 code 얻음
-		System.out.println("code: " +code);
-
 		String token = kakaoService.getToken(code);
 		return kakaoService.getKakaoUserInfo(token);
 		
 	}
 	
 	
-	
-	
+
 	
 	
 	
