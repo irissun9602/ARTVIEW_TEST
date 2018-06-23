@@ -13,5 +13,6 @@ public interface StudentMapper {
 	List<Student> findAll();
 	void insert (Student student);
 	void update(Student student);
+	void updatePassword(String password, String email, String name);
 	void delete(int id);
 }

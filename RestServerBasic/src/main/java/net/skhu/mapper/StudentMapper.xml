@@ -4,36 +4,42 @@
 
 <mapper namespace="net.skhu.mapper.StudentMapper">
 
-  <select id="findOne" resultType="Student">
-    SELECT * FROM Student WHERE id = #{id}
-  </select>
-  
-  <select id="findByStudentNumber" resultType="Student">
-    SELECT * FROM Student WHERE studentNumber = #{studentNumber}
-  </select>   
+	<select id="findOne" resultType="Student">
+		SELECT * FROM Student WHERE id = #{id}
+	</select>
 
-  <select id="findAll" resultType="Student">
-    SELECT s.*, d.departmentName
-    FROM Student s LEFT JOIN department d ON s.departmentId = d.id
-  </select>
+	<select id="findByStudentNumber" resultType="Student">
+		SELECT * FROM Student WHERE studentNumber = #{studentNumber}
+	</select>
 
-  <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-    INSERT Student (studentNumber, name, departmentId, year)
-    VALUES (#{studentNumber}, #{name}, #{departmentId}, #{year})
-  </insert>
+	<select id="findAll" resultType="Student">
+		SELECT s.*, d.departmentName
+		FROM Student s LEFT JOIN department d ON s.departmentId = d.id
+	</select>
 
-  <update id="update">
-    UPDATE Student SET 
-      studentNumber = #{studentNumber}, 
-      name = #{name}, 
-      departmentId = #{departmentId}, 
-      year = #{year} 
-    WHERE id = #{id}
-  </update>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT Student (studentNumber, name, departmentId, year)
+		VALUES (#{studentNumber}, #{name}, #{departmentId}, #{year})
+	</insert>
 
-  <delete id="delete">
-    DELETE FROM Student WHERE id = #{id}
-  </delete>
+	<update id="update">
+		UPDATE Student SET
+		studentNumber = #{studentNumber},
+		name = #{name},
+		departmentId = #{departmentId},
+		year = #{year}
+		WHERE id = #{id}
+	</update>
+
+	<update id="updatePassword">
+		UPDATE Student SET
+		password = #{password}
+		WHERE email = #{email} and name =#{name}
+	</update>
+
+	<delete id="delete">
+		DELETE FROM Student WHERE id = #{id}
+	</delete>
 
 </mapper>
 
