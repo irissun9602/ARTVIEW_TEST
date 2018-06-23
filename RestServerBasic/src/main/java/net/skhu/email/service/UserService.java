@@ -18,16 +18,19 @@ public class UserService {
 	@Autowired
 	StudentMapper studentMapper;
 	
+	public Student findStudentByEmailAndName(String email, String name){
+		return studentMapper.findByEmailAndName(email, name);
+		
+	}
+	
 	
 	public String setNewPassword(Student student) throws MessagingException {
 		String newPassword = RandomPassword.getRamdomPassword(4);
 		String setPassword = Encryption.encrypt(newPassword, Encryption.MD5);
 		studentMapper.updatePassword(setPassword, student.getEmail(), student.getName());
-		
-		
-		
-		
-		
+				
+	
 		return newPassword;
+	}
 	
 }
