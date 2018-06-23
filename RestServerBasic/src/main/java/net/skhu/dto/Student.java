@@ -5,7 +5,7 @@ public class Student {
 	
 	int id;
 	int departmentId;
-	
+	String email;
 	String studentNumber;
 	String name;
 	int year;
@@ -34,6 +34,14 @@ public class Student {
 
 	public void setStudentNumber(String studentNumber) {
 		this.studentNumber = studentNumber;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getName() {
