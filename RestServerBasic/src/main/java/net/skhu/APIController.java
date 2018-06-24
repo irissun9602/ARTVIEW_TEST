@@ -109,7 +109,7 @@ public class APIController {
 		if (user != null) {
 			String sendPassword = userService.setNewPassword(user);
 
-			TestEmail testEmail = new TestEmail("iris3795@gmail.com", "iris9602@naver.com", "제목입니다", sendPassword);
+			TestEmail testEmail = new TestEmail("iris3795@gmail.com", en.getEmail(), "제목입니다", sendPassword);
 			emailService.sendMail(testEmail);
 
 			return "발송완료";
