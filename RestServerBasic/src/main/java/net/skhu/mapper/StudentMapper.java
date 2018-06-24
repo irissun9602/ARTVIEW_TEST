@@ -3,6 +3,7 @@ package net.skhu.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import net.skhu.dto.Student;
 
@@ -10,7 +11,7 @@ import net.skhu.dto.Student;
 public interface StudentMapper {
 	Student findOne(int id);
 	Student findByStudentNumber(String studentNumber);
-	Student findByEmailAndName(String email, String name);
+	Student findByEmail(String email);
 	List<Student> findAll();
 	void insert (Student student);
 	void update(Student student);

@@ -12,8 +12,8 @@
 		SELECT * FROM Student WHERE studentNumber = #{studentNumber}
 	</select>
 	
-	<select id="findByEmailAndName" resultType="Student">
-		SELECT * FROM Student WHERE email = #{email} and name = #{name}
+	<select id="findByEmail"  resultType="Student">
+		SELECT * FROM Student WHERE email = #{email} 
 	</select>
 
 	<select id="findAll" resultType="Student">

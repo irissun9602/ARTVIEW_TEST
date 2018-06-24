@@ -5,7 +5,6 @@ public class Student {
 	
 	int id;
 	int departmentId;
-	String email;
 	String studentNumber;
 	String name;
 	int year;
@@ -36,13 +35,6 @@ public class Student {
 		this.studentNumber = studentNumber;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
 
 	public String getName() {
 		return name;
