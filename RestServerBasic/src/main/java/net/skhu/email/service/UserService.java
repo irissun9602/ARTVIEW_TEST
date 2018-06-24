@@ -28,6 +28,10 @@ public class UserService {
 		
 	}
 	
+	public User unabledUserByEmail(String email) {
+		return userMapper.findByEmail(email);
+	}
+	
 	
 	public String setNewPassword(User user) throws MessagingException {
 		String newPassword = RandomPassword.getRamdomPassword(4);
@@ -36,6 +40,12 @@ public class UserService {
 				
 	
 		return newPassword;
+	}
+	
+	
+	public String setEnabled(User user) {
+		userMapper.updateEnabled(user);
+		return "로그인이 가능합니다.";
 	}
 	
 }
