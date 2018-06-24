@@ -4,6 +4,9 @@
 
 <mapper namespace="net.skhu.mapper.UserMapper">
 
+	<select id="findByEmail"  resultType="User">
+		SELECT * FROM User WHERE email = #{email}
+	</select>
 	
 	<select id="findByEmailAndName"  resultType="User">
 		SELECT * FROM User WHERE email = #{email} and name = #{name}
@@ -14,6 +17,11 @@
 	<update id="updatePassword">
 		UPDATE User SET
 		password = #{password}
+		WHERE email = #{email} 
+	</update>
+	<update id="updateEnabled">
+		UPDATE User SET
+		enabled=1
 		WHERE email = #{email} 
 	</update>
 
