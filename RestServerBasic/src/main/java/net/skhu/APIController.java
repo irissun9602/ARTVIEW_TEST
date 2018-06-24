@@ -20,8 +20,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import net.skhu.dto.Department;
 import net.skhu.dto.Info;
 import net.skhu.dto.Student;
+import net.skhu.dto.User;
 import net.skhu.email.model.TestEmail;
 import net.skhu.email.service.EmailService;
+import net.skhu.email.service.UserService;
 import net.skhu.mapper.DepartmentMapper;
 import net.skhu.mapper.StudentMapper;
 
@@ -30,75 +32,86 @@ import net.skhu.mapper.StudentMapper;
 @RequestMapping("api")
 public class APIController {
 
-	@Autowired StudentMapper studentMapper;
-    @Autowired DepartmentMapper departmentMapper;
-	@Autowired KakaoService kakaoService;
-	
+	@Autowired
+	StudentMapper studentMapper;
+	@Autowired
+	DepartmentMapper departmentMapper;
+	@Autowired
+	KakaoService kakaoService;
+
 	@RequestMapping("students")
-	public List<Student> students(){
+	public List<Student> students() {
 		return studentMapper.findAll();
 	}
-	
-	
+
 	@RequestMapping("student/{id}")
 	public Student student(@PathVariable("id") int id) {
 		return studentMapper.findOne(id);
-		}
-	
-	@RequestMapping(value="student", method=RequestMethod.POST)
+	}
+
+	@RequestMapping(value = "student", method = RequestMethod.POST)
 	public String studentSave(@RequestBody Student student) {
 		studentMapper.insert(student);
 		return "저장성공";
 	}
-	
-	@RequestMapping(value="student", method=RequestMethod.DELETE)
+
+	@RequestMapping(value = "student", method = RequestMethod.DELETE)
 	public String studentSave(@PathVariable("id") int id) {
-		
+
 		studentMapper.delete(id);
 		return "삭제성공";
 	}
-	
+
 	@RequestMapping("departments")
 	public List<Department> departments() {
 		return departmentMapper.findAll();
 	}
-	
-	
-	//카카오톡  로그인 토큰 발급 서비스
-	@RequestMapping(value="kakaologin", produces= "application/x-www-form-urlencoded", 
-			method = {RequestMethod.GET,RequestMethod.POST})
-	public JsonNode kakaoLogin(@RequestParam("code") String code, HttpServletRequest request, HttpServletResponse response) {
-		//로그인 후 code 얻음
-		System.out.println("code: " +code);
+
+	// 카카오톡 로그인 토큰 발급 서비스
+	@RequestMapping(value = "kakaologin", produces = "application/x-www-form-urlencoded", method = { RequestMethod.GET,
+			RequestMethod.POST })
+	public JsonNode kakaoLogin(@RequestParam("code") String code, HttpServletRequest request,
+			HttpServletResponse response) {
+		// 로그인 후 code 얻음
+		System.out.println("code: " + code);
 		String token = kakaoService.getToken(code);
 		return kakaoService.getKakaoUserInfo(token);
-		
+
 	}
-	
-	
-	@RequestMapping(value="kakaoinfo", method= RequestMethod.GET)
+
+	@RequestMapping(value = "kakaoinfo", method = RequestMethod.GET)
 	public Info kakaoinfo(HttpServletRequest request, HttpServletResponse response) {
-		
-		
-		
-		
+
 		Info info = new Info();
-		
+
 		return info;
-		
+
 	}
-	
+
 	@Autowired
 	EmailService emailService;
-	
-	@RequestMapping(value="sendMail", method=RequestMethod.GET)
-	public void send () throws MessagingException {
-		TestEmail testEmail = new TestEmail("iris3795@gmail.com","iris9602@naver.com", "제목입니다","잘가나요");
+	@Autowired
+	UserService userService;
+
+	@RequestMapping(value = "sendMail", method = RequestMethod.GET)
+	public void send() throws MessagingException {
+		TestEmail testEmail = new TestEmail("iris3795@gmail.com", "iris9602@naver.com", "제목입니다", "잘가나요");
 		emailService.sendMail(testEmail);
 	}
-	
 
-	
-	
-	
+	@RequestMapping(value = "newPassword/{email}", method = RequestMethod.GET)
+	public String newPassword(@PathVariable("email") String email) throws MessagingException {
+
+		User user  = userService.findUserByEmail(email);
+
+		if (user != null) {
+			String sendPassword = userService.setNewPassword(user);
+
+			TestEmail testEmail = new TestEmail("iris3795@gmail.com", "iris9602@naver.com", "제목입니다", sendPassword);
+			emailService.sendMail(testEmail);
+		}
+		
+		return "발송완료";
+	}
+
 }
