@@ -5,8 +5,8 @@
 <mapper namespace="net.skhu.mapper.UserMapper">
 
 	
-	<select id="findByEmail"  resultType="User">
-		SELECT * FROM User WHERE email = #{email} 
+	<select id="findByEmailAndName"  resultType="User">
+		SELECT * FROM User WHERE email = #{email} and name = #{name}
 	</select>
 
 	
