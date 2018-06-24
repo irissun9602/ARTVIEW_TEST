@@ -94,11 +94,25 @@ public class APIController {
 	@Autowired
 	UserService userService;
 
-	@RequestMapping(value = "sendMail", method = RequestMethod.GET)
-	public void send() throws MessagingException {
-		TestEmail testEmail = new TestEmail("iris3795@gmail.com", "iris9602@naver.com", "제목입니다", "잘가나요");
+	@RequestMapping(value = "sendMail/{email}", method = RequestMethod.POST)
+	public void send(@PathVariable("email") String email) throws MessagingException {
+		
+		
+		TestEmail testEmail = new TestEmail("iris3795@gmail.com", email, "제목입니다", "http://localhost:8080/RestServerBasic/enabled/"+email);
 		emailService.sendMail(testEmail);
 	}
+	
+	@RequestMapping(value = "enabled/{email}", method = RequestMethod.PUT)
+	public String enabled(@PathVariable("email") String email) throws MessagingException {
+		
+		User user = userService.unabledUserByEmail(email);
+		userService.setEnabled(user);
+		
+		
+		return "계정정보가 활성화되었습니다.";
+	}
+	
+	
 
 	@RequestMapping(value = "newPassword", produces = "application/json; charset=utf8",
 						method = RequestMethod.POST)
