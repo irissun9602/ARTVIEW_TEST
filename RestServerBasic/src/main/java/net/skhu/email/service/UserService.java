@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import net.skhu.dto.Student;
 import net.skhu.dto.User;
+import net.skhu.email.model.EmailAndName;
 import net.skhu.email.model.TestEmail;
 import net.skhu.email.utils.Encryption;
 import net.skhu.email.utils.RandomPassword;
@@ -22,8 +23,8 @@ public class UserService {
 	@Autowired
 	UserMapper userMapper;
 	
-	public User findUserByEmail(String email){
-		return userMapper.findByEmail(email);
+	public User findUserByEmailAndName(EmailAndName en){
+		return userMapper.findByEmailAndName(en);
 		
 	}
 	
