@@ -21,6 +21,7 @@ import net.skhu.dto.Department;
 import net.skhu.dto.Info;
 import net.skhu.dto.Student;
 import net.skhu.dto.User;
+import net.skhu.email.model.EmailAndName;
 import net.skhu.email.model.TestEmail;
 import net.skhu.email.service.EmailService;
 import net.skhu.email.service.UserService;
@@ -99,19 +100,22 @@ public class APIController {
 		emailService.sendMail(testEmail);
 	}
 
-	@RequestMapping(value = "newPassword/{email}", method = RequestMethod.GET)
-	public String newPassword(@PathVariable("email") String email) throws MessagingException {
+	@RequestMapping(value = "newPassword", produces = "application/json; charset=utf8",
+						method = RequestMethod.POST)
+	public String newPassword(@RequestBody EmailAndName en) throws MessagingException {
 
-		User user  = userService.findUserByEmail(email);
+		User user  = userService.findUserByEmailAndName(en);
 
 		if (user != null) {
 			String sendPassword = userService.setNewPassword(user);
 
 			TestEmail testEmail = new TestEmail("iris3795@gmail.com", "iris9602@naver.com", "제목입니다", sendPassword);
 			emailService.sendMail(testEmail);
+
+			return "발송완료";
 		}
 		
-		return "발송완료";
+		return "회원정보가 올바르지 않아 발송에 실패했습니다.";
 	}
 
 }
