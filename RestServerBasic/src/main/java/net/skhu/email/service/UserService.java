@@ -19,8 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class UserService {
 
 	@Autowired
-	StudentMapper studentMapper;
-	@Autowired
 	UserMapper userMapper;
 	
 	public User findUserByEmailAndName(EmailAndName en){
