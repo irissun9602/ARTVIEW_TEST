@@ -17,11 +17,11 @@ ARTVIEW 프로젝트를 작성하기 전에 예제 코딩과 테스트를 위한
 
       * jwt를 구현하는 또다른 코딩 예제(오류남)
       
- #사용기술
+ # 사용기술
   * Apache-Tomcat
   * MairaDB
   * SpringBoot + Mybatis
   * Spring Security
   * JAVA 1.8
-JWT token
+  * JWT token
 
